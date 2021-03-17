@@ -12,5 +12,6 @@ namespace Application.Exceptions
         UserNotExist,
         Bug,
         ProductNotFound,
+        NotFound,
     }
 }

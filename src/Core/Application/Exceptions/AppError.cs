@@ -18,5 +18,6 @@ namespace Application.Exceptions
         public static AppError UserNotFound => new AppError(ErrorCode.UserNotExist, "User not found");
         public static AppError Bug(string message = "BUG occured!") => new AppError(ErrorCode.Bug, message);
         public static AppError ProductNotFound => new AppError(ErrorCode.ProductNotFound, "Product not found");
+        public static AppError NotFound => new AppError(ErrorCode.NotFound, "Entity not found");
     }
 }

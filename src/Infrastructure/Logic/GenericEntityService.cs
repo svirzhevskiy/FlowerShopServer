@@ -1,4 +1,5 @@
-﻿using Application.Logic;
+﻿using Application.Exceptions;
+using Application.Logic;
 using AutoMapper;
 using Database;
 using Domain;
@@ -26,7 +27,7 @@ namespace Logic
             var entity = await _targetSet.FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
 
             if (entity == null)
-                return;
+                throw AppError.NotFound;
 
             _targetSet.Remove(entity);
 
