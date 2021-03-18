@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +8,28 @@ namespace Database.Seeders
 {
     public class CategorySeeder
     {
-        public void Seed(AppDbContext context)
+        public void Seed(AppDbContext context, IServiceProvider serviceProvider, ILogger<AppDbContext> logger)
         {
-            var categories = context.Set<Category>();
+            logger.LogInformation("Category seed started...");
 
-            if (categories.Any())
-                return;
+            try
+            {
+                var categories = context.Set<Category>();
 
-            categories.AddRange(_categories);
-            context.SaveChanges();
+                if (categories.Any())
+                    return;
+
+                categories.AddRange(_categories);
+                context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.Message + "\n" + ex.StackTrace);
+            }
+            finally
+            {
+                logger.LogInformation("Category seed finished.");
+            }
         }
 
         private readonly List<Category> _categories = new()

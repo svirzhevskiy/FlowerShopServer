@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,38 +9,51 @@ namespace Database.Seeders
 {
     public class ProductSeeder
     {
-        public void Seed(AppDbContext context)
+        public void Seed(AppDbContext context, IServiceProvider serviceProvider, ILogger<AppDbContext> logger)
         {
-            var categories = context.Categories.ToList();
-            var products = context.Set<Product>();
+            logger.LogInformation("Product seed started...");
 
-            if (products.Any())
-                return;
-
-            var flowerCategory = categories.First(x => x.Title == "Flowers");
-            var propsSet = new HashSet<string>();
-
-            foreach (var product in _flowers)
+            try
             {
-                product.CategoryId = flowerCategory.Id;
+                var categories = context.Categories.ToList();
+                var products = context.Set<Product>();
 
-                var props = JsonSerializer.Deserialize<Dictionary<string, string>>(product.Properties).Keys;
+                if (products.Any())
+                    return;
 
-                foreach (var prop in props)
+                var flowerCategory = categories.First(x => x.Title == "Flowers");
+                var propsSet = new HashSet<string>();
+
+                foreach (var product in _flowers)
                 {
-                    propsSet.Add(prop);
+                    product.CategoryId = flowerCategory.Id;
+
+                    var props = JsonSerializer.Deserialize<Dictionary<string, string>>(product.Properties).Keys;
+
+                    foreach (var prop in props)
+                    {
+                        propsSet.Add(prop);
+                    }
+
+                    products.Add(product);
                 }
 
-                products.Add(product);
+                var properties = propsSet.Select(x => new Property { Id = Guid.NewGuid(), Title = x }).ToList();
+                context.Properties.AddRange(properties);
+
+                flowerCategory.Properties = properties;
+                context.Categories.Update(flowerCategory);
+
+                context.SaveChanges();
             }
-
-            var properties = propsSet.Select(x => new Property { Id = Guid.NewGuid(), Title = x }).ToList();
-            context.Properties.AddRange(properties);
-
-            flowerCategory.Properties = properties;
-            context.Categories.Update(flowerCategory);
-
-            context.SaveChanges();
+            catch(Exception ex)
+            {
+                logger.LogError(ex.Message + "\n" + ex.StackTrace);
+            }
+            finally
+            {
+                logger.LogInformation("Product seed finished.");
+            }
         }
 
         private readonly List<Product> _flowers = new()

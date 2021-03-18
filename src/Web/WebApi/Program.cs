@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using WebApi.Managers;
 using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace WebApi
 {
@@ -13,10 +14,10 @@ namespace WebApi
     {
         public static void Main(string[] args)
         {
-            var seeders = new List<Action<AppDbContext>>
+            var seeders = new List<Action<AppDbContext, IServiceProvider, ILogger<AppDbContext>>>
             {
-                context => new CategorySeeder().Seed(context),
-                context => new ProductSeeder().Seed(context),
+                (context, serviceProvider, logger) => new CategorySeeder().Seed(context, serviceProvider, logger),
+                (context, serviceProvider, logger) => new ProductSeeder().Seed(context, serviceProvider, logger),
             };
 
             CreateHostBuilder(args).Build().MigrateDatabase(seeders).Run();
