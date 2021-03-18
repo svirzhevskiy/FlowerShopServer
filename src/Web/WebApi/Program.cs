@@ -18,6 +18,9 @@ namespace WebApi
             {
                 (context, serviceProvider, logger) => new CategorySeeder().Seed(context, serviceProvider, logger),
                 (context, serviceProvider, logger) => new ProductSeeder().Seed(context, serviceProvider, logger),
+                (context, serviceProvider, logger) => new RoleSeeder().Seed(context, serviceProvider, logger),
+                (context, serviceProvider, logger) => new UserSeeder().Seed(context, serviceProvider, logger),
+                (context, serviceProvider, logger) => new OrderSeeder().Seed(context, serviceProvider, logger),
             };
 
             CreateHostBuilder(args).Build().MigrateDatabase(seeders).Run();

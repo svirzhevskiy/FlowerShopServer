@@ -21,9 +21,9 @@ namespace Database.EntityConfigurations
                 .WithMany(y => y.Products)
                 .HasForeignKey(x => x.CategoryId);
 
-            //builder
-            //    .HasMany(x => x.Orders)
-            //    .WithMany(y => y.Products);
+            builder
+                .HasMany(x => x.Orders)
+                .WithMany(y => y.Products);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -15,5 +16,7 @@ namespace Domain
 
         public Guid CategoryId { get; set; }
         public Category Category { get; set; }
+
+        public IEnumerable<Order> Orders { get; set; }
     }
 }

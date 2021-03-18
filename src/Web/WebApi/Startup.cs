@@ -1,3 +1,4 @@
+using Application.Services;
 using Database;
 using Logic;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Services;
 
 namespace WebApi
 {
@@ -23,6 +25,8 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDatabase(Configuration);
+
+            services.AddScoped<IHashService, HashService>();
 
             services.AddLogic();
 
