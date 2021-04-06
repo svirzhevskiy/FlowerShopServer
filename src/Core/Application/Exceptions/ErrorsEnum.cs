@@ -1,6 +1,6 @@
 ﻿namespace Application.Exceptions
 {
-    public enum ErrorCode
+    public enum ErrorCode : byte
     {
         None,
         BadLoginOrPass,
