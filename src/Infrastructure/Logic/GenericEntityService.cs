@@ -29,7 +29,9 @@ namespace Logic
             if (entity == null)
                 throw AppError.NotFound;
 
-            _targetSet.Remove(entity);
+            entity.IsDeleted = true;
+
+            _targetSet.Update(entity);
 
             await _context.SaveChangesAsync();
         }
