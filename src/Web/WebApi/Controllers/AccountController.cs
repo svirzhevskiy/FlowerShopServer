@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Application.Exceptions;
 using Application.Logic;
 using Application.Services;
 using Microsoft.AspNetCore.Authentication;
@@ -95,7 +96,7 @@ namespace WebApi.Controllers
                     RefreshToken = jwtResult.RefreshToken.TokenString
                 });
             }
-            catch (SecurityTokenException e)
+            catch (Exception e)
             {
                 return Unauthorized(e.Message); // return 401 so that the client side can redirect the user to login page
             }
