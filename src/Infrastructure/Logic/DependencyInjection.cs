@@ -13,6 +13,7 @@ namespace Logic
             services.AddScoped(typeof(IGenericEntityService<>), typeof(GenericEntityService<>));
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

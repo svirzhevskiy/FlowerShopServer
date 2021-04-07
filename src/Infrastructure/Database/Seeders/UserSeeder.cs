@@ -28,7 +28,7 @@ namespace Database.Seeders
 
                 foreach (var user in data)
                 {
-                    user.RoleId = user.Name == nameof(Roles.Admin) 
+                    user.RoleId = user.Name == nameof(Roles.Admin).ToLower() 
                         ? roles.First(x => x.Title == nameof(Roles.Admin)).Id 
                         : userRoleId;
                 }

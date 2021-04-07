@@ -9,5 +9,6 @@
         Bug,
         ProductNotFound,
         NotFound,
+        InvalidToken
     }
 }
