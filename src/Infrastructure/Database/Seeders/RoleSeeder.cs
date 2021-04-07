@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Application.Enums;
 
 namespace Database.Seeders
 {
@@ -34,8 +35,8 @@ namespace Database.Seeders
 
         private readonly List<Role> _roles = new()
         {
-            new Role { Id = Guid.NewGuid(), Title = "user" },
-            new Role { Id = Guid.NewGuid(), Title = "admin" },
+            new Role { Id = Guid.NewGuid(), Title = nameof(Roles.User) },
+            new Role { Id = Guid.NewGuid(), Title = nameof(Roles.Admin) },
         };
     }
 }

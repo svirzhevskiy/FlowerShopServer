@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Application.Enums;
 
 namespace Database.Seeders
 {
@@ -23,14 +24,13 @@ namespace Database.Seeders
                 var hashService = serviceProvider.GetService(typeof(IHashService)) as IHashService;
                 var data = GetUsers(hashService);
                 var roles = context.Roles.ToList();
-                var userRoleId = roles.First(x => x.Title == "user").Id;
+                var userRoleId = roles.First(x => x.Title == nameof(Roles.User)).Id;
 
                 foreach (var user in data)
                 {
-                    if (user.Name == "admin")
-                        user.RoleId = roles.First(x => x.Title == "admin").Id;
-                    else
-                        user.RoleId = userRoleId;
+                    user.RoleId = user.Name == nameof(Roles.Admin) 
+                        ? roles.First(x => x.Title == nameof(Roles.Admin)).Id 
+                        : userRoleId;
                 }
 
                 users.AddRange(data);
