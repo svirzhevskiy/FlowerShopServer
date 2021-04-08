@@ -69,7 +69,7 @@ namespace WebApi.Controllers
         public ActionResult Logout()
         {
             var userName = User.Identity?.Name;
-            _jwtService.RemoveRefreshTokenByUserName(userName);
+            _jwtService.RemoveRefreshTokenByUser(userName);
             return Ok();
         }
 

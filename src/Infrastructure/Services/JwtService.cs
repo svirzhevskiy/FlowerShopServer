@@ -43,7 +43,7 @@ namespace Services
         }
 
         // can be more specific to ip, user agent, device name, etc.
-        public void RemoveRefreshTokenByUserName(string email)
+        public void RemoveRefreshTokenByUser(string email)
         {
             foreach (var refreshToken in _usersRefreshTokens.Where(x => x.Value.UserName == email))
             {
@@ -62,17 +62,7 @@ namespace Services
                     SecurityAlgorithms.HmacSha256Signature));
 
 
-            var accessToken = string.Empty;
-            try
-            {
-                accessToken = new JwtSecurityTokenHandler().WriteToken(jwtToken);
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            var accessToken = new JwtSecurityTokenHandler().WriteToken(jwtToken);
 
             var refreshToken = new RefreshToken
             {

@@ -12,7 +12,7 @@ namespace Application.Services
         JwtAuthResult GenerateTokens(string email, Claim[] claims, DateTime now);
         JwtAuthResult Refresh(string refreshToken, string accessToken);
         void RemoveExpiredRefreshTokens(DateTime now);
-        void RemoveRefreshTokenByUserName(string email);
+        void RemoveRefreshTokenByUser(string email);
         (ClaimsPrincipal, JwtSecurityToken) DecodeJwtToken(string token);
     }
 }
