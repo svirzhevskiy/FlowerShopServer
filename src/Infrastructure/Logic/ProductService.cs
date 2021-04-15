@@ -19,10 +19,9 @@ namespace Logic
 
         public async Task<List<ProductModel>> GetAllByCategory(Guid categoryId)
         {
-            return await _targetSet
-                            .Where(x => !x.IsDeleted && x.CategoryId == categoryId)
-                            .Select(x => _mapper.Map<ProductModel>(x))
-                            .ToListAsync();
+            var query = _targetSet.Where(x => !x.IsDeleted && x.CategoryId == categoryId);
+
+            return await _mapper.ProjectTo<ProductModel>(query).ToListAsync();
         }
     }
 }

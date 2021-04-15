@@ -18,11 +18,9 @@ namespace Logic
 
         public async Task<List<CategoryModel>> GetAll()
         {
-            return await _targetSet
-                            .Where(x => !x.IsDeleted)
-                            .Include(x => x.Properties)
-                            .Select(x => _mapper.Map<CategoryModel>(x))
-                            .ToListAsync();
+            var query = _targetSet.Where(x => !x.IsDeleted);
+
+            return await _mapper.ProjectTo<CategoryModel>(query).ToListAsync();
         }
     }
 }

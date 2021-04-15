@@ -10,7 +10,7 @@ namespace Logic.Mappings
         public CategoryMapping()
         {
             CreateMap<Category, CategoryModel>()
-                .ForPath(x => x.Properties, y => y.MapFrom(s => s.Properties.Select(p => p.Title)));
+                .ForMember(x => x.Properties, y => y.MapFrom(s => s.Properties.Select(p => p.Title)));
         }
     }
 }
